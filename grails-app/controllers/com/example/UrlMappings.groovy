@@ -8,7 +8,8 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(view:"/auth/index")
+        "/register"(view: "/auth/register")
         "500"(view:'/error')
         "404"(view:'/notFound')
         "/menu"(view:"/main/menu")
