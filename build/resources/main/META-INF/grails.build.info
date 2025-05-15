@@ -1,0 +1,6 @@
+#Thu, 15 May 2025 09:44:21 +0200
+
+info.app.version=0.1
+info.app.name=PokePack
+grails.env=development
+info.app.grailsVersion=6.2.3
