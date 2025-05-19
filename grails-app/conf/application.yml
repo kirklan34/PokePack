@@ -8,7 +8,7 @@ grails:
     defaultPackage: com.example
   profile: web
   mongodb:
-    url: mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/foo
+    url: "mongodb+srv://admin:admin@pokemon.n618nbj.mongodb.net/pokemon?retryWrites=true&w=majority&appName=POKE"
   mime:
     disable:
       accept:
