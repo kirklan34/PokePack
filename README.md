@@ -70,8 +70,6 @@ PokePack is a web application built with Grails, providing a digital collectible
 
 - [User Guide](https://docs.grails.org/6.2.3/guide/index.html)
 - [API Reference](https://pokemontcg.io/)
-- [Grails Geb Functional Testing](https://github.com/grails3-plugins/geb#readme)
-- [Scaffolding Plugin](https://grails.github.io/scaffolding/latest/groovydoc/)
 - [GORM MongoDB Manual](https://gorm.grails.org/latest/mongodb/manual/)
 
 
