@@ -1,73 +1,207 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="es" class="no-js">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>
-        <g:layoutTitle default="Grails"/>
-    </title>
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
+    <title><g:layoutTitle default="Pokémon App"/></title>
+    <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to bottom, #83a4d4, #b6fbff);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: #2d3748;
+    }
 
-    <asset:stylesheet src="application.css"/>
+    .navbar {
+        background-color: #ef5350;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+    }
 
+    .navbar-container {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .navbar a {
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        background: none;
+        margin: 0;
+    }
+
+    .navbar a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-nav {
+        background-color: #ef5350;
+        padding: 1rem;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+        text-align: center;
+        color: white;
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 2rem 1rem;
+        overflow-y: auto;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-left: auto;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .dropdown-content a {
+        color: #333;
+        padding: 10px 15px;
+        text-decoration: none;
+        display: block;
+        font-size: 0.9rem;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown .username {
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .saldo {
+        display: flex;
+        align-items: center;
+    }
+
+    @media (max-width: 900px) {
+        .navbar-container {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .nav-links, .user-info {
+            width: 100%;
+            justify-content: flex-start;
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+        .user-info {
+            justify-content: flex-end;
+            margin-top: 0;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .main-content {
+            padding: 1rem 0.2rem;
+        }
+        .navbar {
+            padding: 0.5rem;
+        }
+        .nav-links {
+            gap: 5px;
+        }
+        .navbar a {
+            font-size: 0.9rem;
+            padding: 6px 8px;
+        }
+    }
+    </style>
     <g:layoutHead/>
 </head>
 
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark navbar-static-top" role="navigation">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/#"><asset:image src="grails.svg" alt="Grails Logo"/></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
-            <ul class="nav navbar-nav ml-auto">
-                <g:pageProperty name="page.nav"/>
-            </ul>
+<nav class="navbar">
+    <div class="navbar-container">
+        <div class="nav-links">
+            <g:if test="${currentUser}">
+                <g:link controller="main" action="menu">Inicio</g:link>
+                <g:link controller="main" action="abrirSobres">Abrir Sobre</g:link>
+                <g:link controller="main" action="pokedex">Mi Pokédex</g:link>
+                <g:link controller="battle" action="selectTeam">Combate</g:link>
+                <g:link controller="trade" action="intercambios">Intercambio</g:link>
+                <g:link controller="market" action="mercado">Mercado</g:link>
+            </g:if>
         </div>
+        <g:if test="${currentUser}">
+            <div class="user-info">
+                <div class="dropdown">
+                    <span class="username">${currentUser.username}</span>
+                    <div class="dropdown-content">
+                        <g:link controller="friends">Amigos</g:link>
+                        <g:link controller="auth" action="logout">Cerrar Sesión</g:link>
+                    </div>
+                </div>
+                <span class="saldo">
+                    <img src="${resource(dir: 'images', file: 'moneda.png')}" alt="Pokémoneda" style="height: 20px; vertical-align: middle; margin-left: 10px;"/>
+                    ${currentUser?.saldo}
+                </span>
+            </div>
+        </g:if>
+        <g:else>
+            <div class="user-info">
+                <g:link controller="auth" action="index">Iniciar Sesión</g:link>
+            </div>
+        </g:else>
     </div>
 </nav>
 
-<g:layoutBody/>
-
-<div class="footer" role="contentinfo">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <a href="https://guides.grails.org" target="_blank">
-                    <asset:image src="advancedgrails.svg" alt="Grails Guides" class="float-left"/>
-                </a>
-                <strong class="centered"><a href="https://guides.grails.org" target="_blank">Grails Guides</a></strong>
-                <p>Building your first Grails app? Looking to add security, or create a Single-Page-App? Check out the <a href="https://guides.grails.org" target="_blank">Grails Guides</a> for step-by-step tutorials.</p>
-
-            </div>
-            <div class="col">
-                <a href="https://docs.grails.org" target="_blank">
-                    <asset:image src="documentation.svg" alt="Grails Documentation" class="float-left"/>
-                </a>
-                <strong class="centered"><a href="https://docs.grails.org" target="_blank">Documentation</a></strong>
-                <p>Ready to dig in? You can find in-depth documentation for all the features of Grails in the <a href="https://docs.grails.org" target="_blank">User Guide</a>.</p>
-
-            </div>
-            <div class="col">
-                <a href="https://slack.grails.org" target="_blank">
-                    <asset:image src="slack.svg" alt="Grails Slack" class="float-left"/>
-                </a>
-                <strong class="centered"><a href="https://slack.grails.org" target="_blank">Join the Community</a></strong>
-                <p>Get feedback and share your experience with other Grails developers in the community <a href="https://slack.grails.org" target="_blank">Slack channel</a>.</p>
-            </div>
-        </div>
-    </div>
+<div class="main-content">
+    <g:layoutBody/>
 </div>
 
-<div id="spinner" class="spinner" style="display:none;">
-    <g:message code="spinner.alt" default="Loading&hellip;"/>
-</div>
-
-<asset:javascript src="application.js"/>
-
+<footer class="footer-nav">
+    <div>© 2025 Pokémon App - Todos los derechos reservados</div>
+</footer>
 </body>
 </html>
