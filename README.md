@@ -81,5 +81,6 @@ PokePack is a web application built with Grails, providing a digital collectible
 
 ---
 
-Enjoy collecting, battling, and trading Pokémon cards with friends in PokePack!
+Enjoy collecting, battling, and trading Pokémon cards with friends in PokePack! 
+
 Made by oRioL Ferrer & Cesc Sierra
